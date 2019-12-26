@@ -29,9 +29,12 @@ for path in args.images:
                 filepath
                 for pattern in args.patterns
                 for filepath in path.glob(f"**/{pattern}")
+                if not Path(f"{args.output}/{filepath.stem}.json").exists()
             ])
-    else:
+    elif not Path(f"{args.output}/{path.stem}.json").exists():
         paths.append(path)
+
+print(f"Found { len(paths) } input files.")
 
 def get_exif(img):
     return {
